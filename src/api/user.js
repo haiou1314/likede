@@ -1,24 +1,31 @@
-import request from '@/utils/request'
+import request from "@/utils/request";
 
+/**
+ * 验证码
+ * @param {String} random 4位随机数
+ * @returns promise
+ */
+export function code(random) {
+  return request({
+    url: `/user-service/user/imageCode/${random}`,
+    method: "GET",
+    responseType: "blob",
+  });
+}
+
+/**
+ * 登录
+ * @param {Object} data 登录的数据
+ * @returns promise
+ */
 export function login(data) {
   return request({
-    url: '/vue-admin-template/user/login',
-    method: 'post',
-    data
-  })
+    url: "/user-service/user/login",
+    method: "POST",
+    data,
+  });
 }
 
-export function getInfo(token) {
-  return request({
-    url: '/vue-admin-template/user/info',
-    method: 'get',
-    params: { token }
-  })
-}
+export function getInfo() {}
 
-export function logout() {
-  return request({
-    url: '/vue-admin-template/user/logout',
-    method: 'post'
-  })
-}
+export function logout() {}
