@@ -34,7 +34,7 @@
             </el-input>
           </el-form-item>
 
-          <el-form-item prop="code">
+          <el-form-item prop="code" class="code">
             <el-input
               v-model="loginForm.code"
               class="input1"
@@ -49,7 +49,13 @@
             </span>
           </el-form-item>
 
-          <el-button type="primary" class="btn" @click="login">登录</el-button>
+          <el-button
+            type="primary"
+            class="btn"
+            @click="login"
+            :loading="isLogin"
+            >登录</el-button
+          >
         </div>
       </div>
     </el-form>
@@ -90,16 +96,22 @@ export default {
         ],
         code: [{ required: true, message: "请填写验证码" }],
       },
+      isLogin: false,
     };
   },
   methods: {
     // 登录
     async login() {
+      this.isLogin = true;
       try {
         await this.$refs.loginForm.validate();
-        this.$store.dispatch("user/getToken", this.loginForm);
+        await this.$store.dispatch("user/getToken", this.loginForm);
+        this.$router.push("/");
+        this.$message.success("登录成功");
       } catch (error) {
         console.log("有一项错误");
+      } finally {
+        this.isLogin = false;
       }
     },
     // 获取验证码
@@ -180,15 +192,17 @@ $cursor: #666;
     padding-left: 20px;
   }
   .img1 {
-    cursor: pointer;
     position: relative;
+    top: 20px;
+    cursor: pointer;
   }
   .input1 {
-    top: -20px;
     width: 316px;
   }
+  .code {
+    margin-top: -20px;
+  }
   .btn {
-    margin-top: -50px;
     width: 448px;
     height: 47px;
     background-color: #6478ed;
