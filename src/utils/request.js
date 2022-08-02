@@ -1,13 +1,16 @@
 import axios from "axios";
 import { Message } from "element-ui";
+import store from "@/store";
+
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API,
   timeout: 5000,
 }); // 创建一个axios的实例
 service.interceptors.request.use((config) => {
   if (store.state.user.token) {
-    config.headers.Authorization = "Bearer " + store.state.user.token;
+    config.headers.Authorization = store.state.user.token;
   }
+
   return config;
 }); // 请求拦截器
 service.interceptors.response.use(
@@ -16,14 +19,16 @@ service.interceptors.response.use(
     if (istrue === 0) {
       return res;
     }
-    console.log(res);
+
+    if (res.config.url.indexOf("/api/user-service/user/") === 0) {
+      return res;
+    }
     const { success, msg } = res.data;
-    console.log(success);
     if (success) {
       return res.data;
     }
-    Message.error(msg);
-    return Promise.reject(new Error(msg));
+    // Message.error(msg);
+    // return Promise.reject(new Error(msg));
   },
   function (error) {
     Message.error("系统错误");

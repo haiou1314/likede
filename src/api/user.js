@@ -26,16 +26,27 @@ export function login(data) {
   });
 }
 
+// /**
+//  * 获取用户信息
+//  * @returns promise
+//  */
+// export function userinfoApi() {
+//   return request({
+//     url: "/user-service/user/search",
+//     method: "get",
+//   });
+// }
+
 /**
  * 根据id获取用户详情
- * @param {*} id 
+ * @param {*} id
  * @returns promise
  */
- export function userinfoDateil(id) {
+export function userinfoDateil(id) {
   return request({
     url: `/user-service/user/${id}`,
-    method: 'GET',
-  })
+    method: "GET",
+  });
 }
 
 export function getInfo() {}
