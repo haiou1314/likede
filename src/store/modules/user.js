@@ -10,10 +10,11 @@ export default {
     },
   },
   actions: {
+    // token获取
     async getToken({ commit }, payload) {
       const res = await login(payload);
-      console.log(res.data.token);
-      commit("setToken", res.data.token);
+      console.log(res);
+      commit("setToken",res.token);
     },
   },
   getters: {},
