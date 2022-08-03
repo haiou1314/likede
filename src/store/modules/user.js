@@ -8,6 +8,7 @@ export default {
   },
   mutations: {
     setToken(state, payload) {
+      console.log(payload + "sdfss");
       state.token = payload;
     },
     setuserId(state, payload) {
@@ -21,14 +22,13 @@ export default {
     // token获取
     async getToken({ commit }, payload) {
       const res = await login(payload);
-      commit("setToken", res.token);
-      commit("setuserId", res.userId);
+      commit("setToken", res.data.token);
+      commit("setuserId", res.data.userId);
     },
     //用户信息获取
-    async getuserinfo({ commit }) {
-      const res = await userinfoDateil(1);
-      console.log(res.data);
-      commit("setuserinfon", res.data);
+    async getuserinfo(context) {
+      const res = await userinfoDateil(context.state.userId);
+      context.commit("setuserinfon", res.data);
     },
   },
   getters: {},

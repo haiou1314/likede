@@ -27,8 +27,8 @@ service.interceptors.response.use(
     if (success) {
       return res.data;
     }
-    // Message.error(msg);
-    // return Promise.reject(new Error(msg));
+    Message.error(msg);
+    return Promise.reject(new Error(msg));
   },
   function (error) {
     Message.error("系统错误");

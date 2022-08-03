@@ -107,8 +107,6 @@ export default {
         await this.$refs.loginForm.validate();
         await this.$store.dispatch("user/getToken", this.loginForm);
         this.$router.push("/");
-      } catch (error) {
-        console.log("有一项错误");
       } finally {
         this.isLogin = false;
       }
