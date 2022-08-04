@@ -1,20 +1,20 @@
 import { login, userinfoDateil } from "@/api";
+import { setTokenTime } from '@/utils/auth'
 export default {
   namespaced: true,
   state: {
     token: "",
     userId: "",
-    userinfo: "",
+    userinfo: {},
   },
   mutations: {
     setToken(state, payload) {
-      console.log(payload + "sdfss");
       state.token = payload;
     },
     setuserId(state, payload) {
       state.userId = payload;
     },
-    setuserinfon(state, payload) {
+    setuserinfo(state, payload) {
       state.userinfo = payload;
     },
   },
@@ -24,11 +24,17 @@ export default {
       const res = await login(payload);
       commit("setToken", res.data.token);
       commit("setuserId", res.data.userId);
+      setTokenTime()
     },
     //用户信息获取
     async getuserinfo(context) {
       const res = await userinfoDateil(context.state.userId);
-      context.commit("setuserinfon", res.data);
+      context.commit("setuserinfo", res.data);
+    },
+    // 登出
+    logout({ commit }) {
+      commit("setToken", "");
+      commit("setuserinfo", {});
     },
   },
   getters: {},
