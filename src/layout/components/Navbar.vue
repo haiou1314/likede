@@ -5,7 +5,7 @@
     <breadcrumb class="breadcrumb-container" />
 
     <div class="right-menu">
-      <el-dropdown class="avatar-container" trigger="click">
+      <div class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <img
             src="$store.state.user.userinfo.userName"
@@ -16,7 +16,7 @@
           <span @click="logout">退出</span>
           <i class="el-icon-caret-bottom" @click="logout" />
         </div>
-      </el-dropdown>
+      </div>
     </div>
   </div>
 </template>
@@ -46,7 +46,7 @@ export default {
     },
     async logout() {
       await this.$store.dispatch("user/logout");
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      this.$router.push(`/login?redirect=${this.$route.fullPath}`);
     },
   },
 };
